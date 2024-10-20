@@ -1,0 +1,110 @@
+require:
+  - rubocop-performance
+  - rubocop-rake
+  - rubocop-rspec
+  - rubocop-rubycw
+  - standard
+  - standard-custom
+  - standard-performance
+
+inherit_gem:
+  standard: config/base.yml
+  standard-performance: config/base.yml
+  standard-custom: config/base.yml
+  syntax_tree: config/rubocop.yml
+
+inherit_mode:
+  merge:
+    - Exclude
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'bin/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+
+Bundler/OrderedGems:
+  Enabled: true
+
+Layout/ArgumentAlignment:
+  Enabled: false
+Layout/EmptyLineBetweenDefs:
+  AllowAdjacentOneLineDefs: true
+Layout/MultilineOperationIndentation:
+  Enabled: false
+Layout/LineLength:
+  Max: 100
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: space
+
+Metrics/ClassLength:
+  Max: 250
+Metrics/MethodLength:
+  Max: 30
+  Exclude:
+    - 'spec/**/*'
+Metrics/ModuleLength:
+  Max: 250
+  Exclude:
+    - 'spec/**/*'
+Metrics/ParameterLists:
+  Max: 3
+  CountKeywordArgs: false
+  Exclude:
+    - 'spec/**/*'
+
+RSpec/AnyInstance:
+  Enabled: false
+RSpec/BeEq:
+  Enabled: false
+RSpec/ContextWording:
+  Prefixes:
+    - when
+RSpec/DescribedClass:
+  EnforcedStyle: explicit
+RSpec/EmptyLineAfterFinalLet:
+  Enabled: false
+RSpec/ExampleLength:
+  Max: 30
+RSpec/ImplicitExpect:
+  EnforcedStyle: should
+RSpec/ImplicitSubject:
+  Enabled: false
+RSpec/IndexedLet:
+  Max: 2
+RSpec/MatchArray:
+  Enabled: false
+RSpec/MessageChain:
+  Enabled: false
+RSpec/MissingExampleGroupArgument:
+  Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
+RSpec/NestedGroups:
+  Max: 6
+RSpec/VerifiedDoubles:
+  Enabled: false
+RSpec/VoidExpect:
+  Exclude:
+    - 'spec/support/*'
+
+Style/ClassMethodsDefinitions:
+  Enabled: true
+Style/CollectionMethods:
+  Enabled: true
+Style/DisableCopsWithinSourceCodeDirective:
+  Enabled: true
+Style/GlobalStdStream:
+  Enabled: false
+Style/GlobalVars:
+  Enabled: false
+Style/RescueStandardError:
+  EnforcedStyle: explicit
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: single_quotes
+Style/UnlessLogicalOperators:
+  Enabled: true
+  EnforcedStyle: forbid_logical_operators

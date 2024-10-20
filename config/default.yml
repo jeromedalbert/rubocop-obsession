@@ -1,0 +1,163 @@
+Obsession/MethodOrder:
+  Enabled: true
+Obsession/NoBreakOrNext:
+  Enabled: false
+  Exclude:
+    - 'script/db/**/*'
+Obsession/NoParagraphs:
+  Enabled: false
+  Exclude:
+    - 'db/migrate/*'
+    - 'spec/**/*'
+Obsession/NoTodos:
+  Enabled: false
+Obsession/TooManyParagraphs:
+  Enabled: false
+  Exclude:
+    - 'db/migrate/*'
+    - 'script/db/**/*'
+    - 'spec/**/*'
+
+Obsession/Graphql/MutationName:
+  Enabled: true
+  Include:
+    - 'app/graphql/mutations/**/*'
+
+Obsession/Rspec/DescribePublicMethod:
+  Enabled: true
+  Include:
+    - 'spec/**/*_spec.rb'
+# Uncommenting this would mean adding rubocop-rspec as a gem dependency. Feels like too much for now.
+# Obsession/Rspec/EmptyLineAfterFinalLet:
+#   Enabled: true
+#   Include:
+#     - 'spec/**/*'
+
+Obsession/Rails/CallbackOneMethod:
+  Enabled: true
+  Include:
+    - 'app/models/**/*'
+    - 'app/controllers/**/*'
+Obsession/Rails/FullyDefinedJsonField:
+  Enabled: true
+  Include:
+    - 'db/migrate/*'
+Obsession/Rails/MigrationBelongsTo:
+  Enabled: true
+  Include:
+    - 'db/migrate/*'
+Obsession/Rails/NoCallbackConditions:
+  Enabled: true
+  Include:
+    - 'app/models/**/*'
+Obsession/Rails/PrivateCallback:
+  Enabled: true
+  Include:
+    - 'app/models/**/*'
+    - 'app/controllers/**/*'
+Obsession/Rails/SafetyAssuredComment:
+  Enabled: false
+  Include:
+    - 'db/migrate/*'
+Obsession/Rails/ServiceName:
+  Enabled: true
+  Include:
+    - 'app/services/**/*'
+    - 'app/jobs/**/*'
+  Exclude:
+    - 'app/jobs/application_job.rb'
+    - 'app/jobs/scheduled/scheduled_job.rb'
+    - '**/*events/**'
+Obsession/Rails/ServicePerformMethod:
+  Enabled: true
+  Include:
+    - 'app/services/**/*'
+Obsession/Rails/ShortAfterCommit:
+  Enabled: true
+  Include:
+    - 'app/models/**/*'
+Obsession/Rails/ShortValidate:
+  Enabled: true
+  Include:
+    - 'app/models/**/*'
+Obsession/Rails/ValidateOneField:
+  Enabled: true
+  Include:
+    - 'app/models/**/*'
+Obsession/Rails/ValidationMethodName:
+  Enabled: true
+  Include:
+    - 'app/models/**/*'
+
+Layout/ClassStructure:
+  Enabled: true
+  AutoCorrect: false
+  Categories:
+    module_inclusion:
+      - include
+      - prepend
+      - extend
+    attributes:
+      - attribute
+      - attr_reader
+      - attr_writer
+      - attr_accessor
+      - alias_attribute
+      - delegate
+      - enum
+    associations:
+      - belongs_to
+      - has_one
+      - has_many
+      - has_and_belongs_to_many
+    validations:
+      - validates
+      - validate
+      - validates_with
+    callbacks:
+      - before_validation
+      - before_save
+      - before_create
+      - before_destroy
+      - after_initialize
+      - after_create
+      - after_save
+      - after_destroy
+      - after_commit
+      - after_create_commit
+      - after_update_commit
+      - after_destroy_commit
+      - around_create
+    other_macros:
+      - devise
+      - acts_as_paranoid
+      - serialize
+      - has_paper_trail
+      - audited
+    scopes:
+      - default_scope
+      - scope
+    controller_actions:
+      - before_action
+      - skip_before_action
+    controller_rescue:
+      - rescue_from
+  ExpectedOrder:
+    - module_inclusion
+    - constants
+    - attributes
+    - enums
+    - associations
+    - validations
+    - callbacks
+    - other_macros
+    - scopes
+    - controller_macros
+    - controller_actions
+    - controller_action_caching
+    - controller_rescue
+    - class_methods
+    - initializer
+    - public_methods
+    - protected_methods
+    - private_methods

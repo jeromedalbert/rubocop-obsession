@@ -1,9 +1,9 @@
 require 'active_support'
+require 'active_support/core_ext/object/blank'
+require 'rubocop'
+
+require_relative 'cop/mixin/helpers'
+Dir["#{__dir__}/cop/obsession/**/*.rb"].sort.each { |file| require file }
 require_relative 'obsession/version'
 
-module Rubocop
-  module Obsession
-    class Error < StandardError
-    end
-  end
-end
+RuboCop::ConfigLoader.inject_defaults!("#{__dir__}/../..")

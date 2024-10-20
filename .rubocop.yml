@@ -38,6 +38,9 @@ Layout/LineLength:
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: space
 
+Lint/NonLocalExitFromIterator:
+  Enabled: false
+
 Metrics/ClassLength:
   Max: 250
 Metrics/MethodLength:

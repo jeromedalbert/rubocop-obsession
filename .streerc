@@ -1,0 +1,9 @@
+--print-width=100
+--plugins=plugin/single_quotes,plugin/disable_auto_ternary
+
+--ignore-files='log/**'
+--ignore-files='node_modules/**'
+--ignore-files='package.json'
+--ignore-files='tmp/**'
+--ignore-files='vendor/**'
+--ignore-files='**/*.json*'

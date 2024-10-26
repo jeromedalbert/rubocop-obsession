@@ -95,6 +95,10 @@ module RuboCop
           verify_private_methods_order
         end
 
+        def on_module(module_node)
+          on_class(module_node)
+        end
+
         private
 
         def find_private_node

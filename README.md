@@ -1,6 +1,6 @@
 # Rubocop Obsession
 
-A [RuboCop](https://github.com/rubocop/rubocop) extension that mostly focuses on
+A [RuboCop](https://github.com/rubocop/rubocop) extension that focuses on
 higher-level concepts, like checking that code reads from
 [top to bottom](lib/rubocop/cop/obsession/method_order.rb), or only unit
 testing [public methods](lib/rubocop/cop/obsession/rspec/describe_public_method.rb).
@@ -67,11 +67,11 @@ end
 
 All cops are located under
 [`lib/rubocop/cop/obsession`](lib/rubocop/cop/obsession), and contain examples
-and documentation.
+and documentation. Their default configuration is defined in
+[`config/default.yml`](config/default.yml).
 
-These cops are opinionated and can often feel like too much, that is why some
-of them are disabled by default. They should not be treated as gospel, so do
-not hesitate to enable or disable them as needed.
+These cops are opinionated and can feel like too much, that is why some of them
+are disabled by default. Do not hesitate to enable or disable them as needed.
 
 I wrote them to scratch an itch I had at one point or another. Tastes change
 with time, and I personally do not use some of them any more, but others might

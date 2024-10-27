@@ -3,7 +3,8 @@
 module RuboCop
   module Cop
     module Obsession
-      # This cop checks for private/protected methods that are not ordered correctly.
+      # This cop checks for private/protected methods that are not ordered
+      # correctly. It supports autocorrect.
       #
       # Code should read from top to bottom: methods should be defined in the
       # same order as the order when they are first mentioned.

@@ -8,12 +8,12 @@ module RuboCop
         # defaults or comments.
         #
         # - json(b) fields should have a default value like {} or [] so code can
-        # do my_field['field'] or my_field.first without fear that my_field is
-        # nil.
+        #   do my_field['field'] or my_field.first without fear that my_field is
+        #   nil.
         # - It is impossible to know the structure of a json(b) field just by
-        # reading the schema, because json(b) is an unstructured type. That's why
-        # an "Example: ..." Postgres comment should always be present when
-        # defining the field.
+        #   reading the schema, because json(b) is an unstructured type. That's why
+        #   an "Example: ..." Postgres comment should always be present when
+        #   defining the field.
         #
         # @example
         #

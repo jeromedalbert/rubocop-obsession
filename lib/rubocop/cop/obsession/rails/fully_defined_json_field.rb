@@ -26,7 +26,7 @@ module RuboCop
         #              :jsonb,
         #              default: [],
         #              comment: "Example: [{ 'name': 'ruby' }, { 'name': 'python' }]"
-        class FullyDefinedJsonField < Cop
+        class FullyDefinedJsonField < Base
           def_node_matcher :json_field?, <<~PATTERN
             (send nil? :add_column _ _ (sym {:json :jsonb}) ...)
           PATTERN

@@ -39,7 +39,7 @@ module RuboCop
       #
       #     Rails.logger.info('Content has been set')
       #   end
-      class TooManyParagraphs < Cop
+      class TooManyParagraphs < Base
         MSG = 'Organize method into 2 to 3 paragraphs (init, action, result).'
         MAX_PARAGRAPHS = 3
 

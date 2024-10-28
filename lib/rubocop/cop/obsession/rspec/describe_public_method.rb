@@ -37,7 +37,7 @@ module RuboCop
         #       ...
         #     end
         #   end
-        class DescribePublicMethod < Cop
+        class DescribePublicMethod < Base
           MSG = 'Only test public methods.'
 
           def_node_matcher :on_context_method, <<-PATTERN

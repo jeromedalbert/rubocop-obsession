@@ -27,7 +27,7 @@ module RuboCop
         #   def load_blog_post
         #     ...
         #   end
-        class PrivateCallback < Cop
+        class PrivateCallback < Base
           include VisibilityHelp
           include Helpers
 

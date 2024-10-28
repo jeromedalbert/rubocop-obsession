@@ -13,7 +13,7 @@ module RuboCop
         #
         #   # good
         #   validate :validate_at_least_one_admin
-        class ValidationMethodName < Cop
+        class ValidationMethodName < Base
           MSG = 'Prefix custom validation method with validate_'
 
           def_node_matcher :on_validate_callback, <<~PATTERN

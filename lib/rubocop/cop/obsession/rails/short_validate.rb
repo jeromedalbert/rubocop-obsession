@@ -13,7 +13,7 @@ module RuboCop
         #
         #   # good
         #   validate :validate_url
-        class ShortValidate < Cop
+        class ShortValidate < Base
           MSG = 'The `on:` argument is not needed in this validate.'
 
           def_node_matcher :validate_with_unneeded_on?, <<~PATTERN

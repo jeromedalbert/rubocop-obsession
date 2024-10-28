@@ -22,7 +22,7 @@ module RuboCop
         #     class TrackEvent < Base
         #     end
         #   end
-        class MutationName < Cop
+        class MutationName < Base
           include Helpers
 
           MSG = 'Mutation name should start with a verb.'

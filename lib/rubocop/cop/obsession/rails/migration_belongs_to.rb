@@ -21,7 +21,7 @@ module RuboCop
         #   def change
         #     add_belongs_to :blog_posts, :user
         #   end
-        class MigrationBelongsTo < Cop
+        class MigrationBelongsTo < Base
           def_node_matcher :add_reference?, <<~PATTERN
             (send nil? :add_reference ...)
           PATTERN

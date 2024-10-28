@@ -13,7 +13,7 @@ module RuboCop
         #
         #   # good
         #   after_create_commit :send_email
-        class ShortAfterCommit < Cop
+        class ShortAfterCommit < Base
           MSG = 'Use shorter %<prefer>s'
 
           def_node_matcher :after_commit?, '(send nil? :after_commit ...)'

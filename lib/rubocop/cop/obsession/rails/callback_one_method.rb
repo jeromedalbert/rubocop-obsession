@@ -16,7 +16,7 @@ module RuboCop
         #   # good
         #   after_create :notify_followers
         #   after_create :send_stats
-        class CallbackOneMethod < Cop
+        class CallbackOneMethod < Base
           include Helpers
 
           MSG = 'Declare only one method per callback definition.'

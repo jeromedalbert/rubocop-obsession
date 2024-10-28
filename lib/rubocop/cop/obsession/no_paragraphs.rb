@@ -33,7 +33,7 @@ module RuboCop
       #
       #     Rails.logger.info('Content has been set')
       #   end
-      class NoParagraphs < Cop
+      class NoParagraphs < Base
         MSG = 'Method has many instructions and should be broken up into paragraphs.'
         MAX_CONSECUTIVE_INSTRUCTIONS_ALLOWED = 5
 

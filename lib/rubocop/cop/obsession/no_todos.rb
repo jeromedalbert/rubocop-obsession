@@ -11,7 +11,7 @@ module RuboCop
       # stale TODOs. Sometimes developers really mean to work on their TODOs
       # soon, but then Product re-prioritizes their work, or the developer
       # leaves the company, and never gets a chance to tackle them.
-      class NoTodos < Cop
+      class NoTodos < Base
         MSG = 'Avoid TODO comment, create a task in your project management tool instead.'
         KEYWORD_REGEX = /(^|[^\w])(TODO|FIXME|OPTIMIZE|HACK)($|[^\w])/i
 

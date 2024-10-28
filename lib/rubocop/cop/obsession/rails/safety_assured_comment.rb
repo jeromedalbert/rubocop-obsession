@@ -13,7 +13,7 @@ module RuboCop
         # of the DB migration. The reason should be detailed and reviewed by a
         # knowledgeable PR reviewer. Failure to follow instructions may bring your
         # app down.
-        class SafetyAssuredComment < Cop
+        class SafetyAssuredComment < Base
           MSG =
             'Add `# Safe because <reason>` comment above safety_assured. ' \
               'An invalid reason may bring the site down.'

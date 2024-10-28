@@ -16,7 +16,7 @@ module RuboCop
         #   # good
         #   validates :name, presence: true
         #   validates :status, presence: true
-        class ValidateOneField < Cop
+        class ValidateOneField < Base
           MSG = 'Validate only one field per line.'
 
           def_node_matcher :validates_with_more_than_one_field?, <<~PATTERN

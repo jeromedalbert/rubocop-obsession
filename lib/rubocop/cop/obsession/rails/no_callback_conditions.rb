@@ -29,7 +29,7 @@ module RuboCop
         #     return if !rss_changed?
         #     ...
         #   end
-        class NoCallbackConditions < Cop
+        class NoCallbackConditions < Base
           MSG =
             'Avoid condition in callback declaration, move it inside the callback method instead.'
 

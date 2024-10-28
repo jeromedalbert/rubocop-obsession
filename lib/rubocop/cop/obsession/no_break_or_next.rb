@@ -59,7 +59,7 @@ module RuboCop
       #       end
       #     end
       #   end
-      class NoBreakOrNext < Cop
+      class NoBreakOrNext < Base
         BIG_LOOP_MSG =
           'Avoid `break`/`next` in big loop, decompose into private method or rethink loop.'
         NO_NEXT_MSG = 'Avoid `next` in loop, use conditions or rethink loop.'

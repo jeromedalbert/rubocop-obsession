@@ -66,8 +66,6 @@ Obsession/Rails/ServiceName:
     - 'app/jobs/**/*'
   Exclude:
     - 'app/jobs/application_job.rb'
-    - 'app/jobs/scheduled/scheduled_job.rb'
-    - '**/*events/**'
 Obsession/Rails/ServicePerformMethod:
   Enabled: true
   Include:

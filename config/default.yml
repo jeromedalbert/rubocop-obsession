@@ -3,7 +3,7 @@ Obsession/MethodOrder:
 Obsession/NoBreakOrNext:
   Enabled: false
   Exclude:
-    - 'script/db/**/*'
+    - 'script/**/*'
 Obsession/NoParagraphs:
   Enabled: false
   Exclude:
@@ -15,7 +15,7 @@ Obsession/TooManyParagraphs:
   Enabled: false
   Exclude:
     - 'db/migrate/*'
-    - 'script/db/**/*'
+    - 'script/**/*'
     - 'spec/**/*'
 
 Obsession/Graphql/MutationName:

@@ -8,7 +8,7 @@ module RuboCop
       # If your method code has many instructions that are not organized into
       # paragraphs, you should break it up into multiple paragraphs to make the
       # code more breathable and readable. The 3 possible paragraphs themes
-      # always are: initialization, action, and result.
+      # could be: initialization, action, and result.
       #
       # @example
       #

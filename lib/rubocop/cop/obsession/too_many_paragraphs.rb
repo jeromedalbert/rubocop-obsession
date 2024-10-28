@@ -6,13 +6,13 @@ module RuboCop
       # This cop checks for methods with too many paragraphs.
       #
       # You should organize your method code into 2 to 3 paragraphs maximum.
-      # The 3 possible paragraphs themes always are: initialization, action,
+      # The 3 possible paragraphs themes could be: initialization, action,
       # and result. Shape your paragraph according to those themes. Spec code
       # should also be organized into 2 to 3 paragraphs
       # (initialization/action/result or given/when/then paragraphs).
       #
-      # After organizing your paragraphs, if they are too long or dense, it is
-      # a sign that you should break your code into smaller methods.
+      # After organizing your paragraphs, if they are too long or dense, it
+      # could be a sign that they should be broken into smaller methods.
       #
       # @example
       #

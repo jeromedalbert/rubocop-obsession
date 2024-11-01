@@ -9,6 +9,9 @@ There are some lower-level cops as well.
 Use the provided cops as is, or as inspiration to build custom cops aligned
 with your project's best practices.
 
+Does your project have any cool custom cops that you think others might benefit
+from? Then please open a PR!
+
 ## Installation
 
 Install the gem:

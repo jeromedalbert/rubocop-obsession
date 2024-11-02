@@ -57,6 +57,7 @@ module RuboCop
       class MethodOrder < Base
         include Helpers
         include RangeHelp
+        include CommentsHelp
         include VisibilityHelp
         extend AutoCorrector
 
@@ -216,32 +217,7 @@ module RuboCop
         end
 
         def source_range_with_comment(node)
-          range_between(start_position_with_comment(node), end_position(node) + 1)
-        end
-
-        def start_position_with_comment(node)
-          first_comment = nil
-
-          (node.first_line - 1).downto(1) do |annotation_line|
-            comment = processed_source.comment_at_line(annotation_line)
-            break if !comment
-            first_comment = comment if whole_line_comment_at_line?(annotation_line)
-          end
-
-          start_line_position(first_comment || node)
-        end
-
-        def whole_line_comment_at_line?(line)
-          /\A\s*#/.match?(processed_source.lines[line - 1])
-        end
-
-        def start_line_position(node)
-          processed_source.buffer.line_range(node.loc.line).begin_pos - 1
-        end
-
-        def end_position(node)
-          end_line = processed_source.buffer.line_for_position(node.loc.expression.end_pos)
-          processed_source.buffer.line_range(end_line).end_pos
+          range_between(begin_pos_with_comment(node), end_position_for(node) + 1)
         end
       end
     end

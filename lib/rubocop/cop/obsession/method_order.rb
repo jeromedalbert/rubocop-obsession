@@ -56,7 +56,6 @@ module RuboCop
       #   def method_c; ...; end
       class MethodOrder < Base
         include Helpers
-        include RangeHelp
         include CommentsHelp
         include VisibilityHelp
         extend AutoCorrector
@@ -210,14 +209,17 @@ module RuboCop
 
         def autocorrect(corrector, method, previous_method)
           previous_method_range = source_range_with_comment(previous_method)
+          if buffer.source[previous_method_range.end_pos + 1] == "\n"
+            previous_method_range = previous_method_range.adjust(end_pos: 1)
+          end
+
           method_range = source_range_with_comment(method)
+          if buffer.source[method_range.begin_pos - 1] == "\n"
+            method_range = method_range.adjust(end_pos: 1)
+          end
 
           corrector.insert_after(previous_method_range, method_range.source)
           corrector.remove(method_range)
-        end
-
-        def source_range_with_comment(node)
-          range_between(begin_pos_with_comment(node), end_position_for(node) + 1)
         end
       end
     end

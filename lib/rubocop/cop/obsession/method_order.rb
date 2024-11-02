@@ -213,13 +213,27 @@ module RuboCop
             previous_method_range = previous_method_range.adjust(end_pos: 1)
           end
 
-          method_range = source_range_with_comment(method)
+          method_range = source_range_with_signature(method)
           if buffer.source[method_range.begin_pos - 1] == "\n"
             method_range = method_range.adjust(end_pos: 1)
           end
 
           corrector.insert_after(previous_method_range, method_range.source)
           corrector.remove(method_range)
+        end
+
+        def source_range_with_signature(method)
+          previous_node = method.left_sibling
+          begin_node = sorbet_signature?(previous_node) ? previous_node : method
+
+          begin_pos = begin_pos_with_comment(begin_node)
+          end_pos = end_position_for(method)
+
+          Parser::Source::Range.new(buffer, begin_pos, end_pos)
+        end
+
+        def sorbet_signature?(node)
+          node && node.method_name == :sig && node.type == :block
         end
       end
     end

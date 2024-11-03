@@ -11,18 +11,21 @@ module RuboCop
       # Private/protected methods should follow that rule.
       #
       # Note 1: public methods do not have to follow that rule, and can be
-      # defined in any order the developer wants, like by order of
-      # importance. This is because they are usually called outside of the
-      # class and often not called within the class at all. If possible though,
-      # developers should still try to order their public methods from top to
-      # bottom when it makes sense.
+      # defined in any order the developer wants, like by order of importance.
+      # This is because they are usually called outside of the class and often
+      # not called within the class at all. If possible though, developers
+      # should still try to order their public methods from top to bottom when
+      # it makes sense.
       #
       # Note 2: method order cannot be computed for methods called by `send`,
       # metaprogramming, private methods called by superclasses or modules,
       # etc. This cop's suggestions and autocorrections may be slightly off for
       # these kinds of edge cases.
       #
-      # Note 3: for more information on this style of method ordering, see
+      # Note 3: for simplicity, protected methods do not have to follow that
+      # rule if there are both a protected section and a private section.
+      #
+      # Note 4: for more information on this style of method ordering, see
       # Robert C. Martin's "Clean Code" book > "Chapter 3: Functions" > "One
       # level of abstraction per function" > "Reading Code from Top to Bottom:
       # The Stepdown Rule" chapter.
@@ -62,7 +65,7 @@ module RuboCop
 
         MSG = 'Method `%<after>s` should appear below `%<previous>s`.'
 
-        def_node_search :private_node, <<~PATTERN
+        def_node_search :private_nodes, <<~PATTERN
           (send nil? {:private :protected})
         PATTERN
 
@@ -103,7 +106,24 @@ module RuboCop
         private
 
         def find_private_node
-          @private_node = private_node(@class_node)&.first
+          private_nodes = private_nodes(@class_node).to_a
+          return nil if private_nodes.empty?
+
+          visibilities = private_nodes.map(&:method_name)
+          @ignore_protected = visibilities.include?(:protected) && visibilities.include?(:private)
+
+          @private_node = private_nodes.find { |node| !ignore_visibility?(node.method_name) }
+        end
+
+        def ignore_visibility?(visibility)
+          case visibility
+          when :public
+            true
+          when :protected
+            @ignore_protected
+          when :private
+            false
+          end
         end
 
         def build_methods
@@ -174,7 +194,7 @@ module RuboCop
         end
 
         def should_ignore?(ast_node)
-          ast_node.nil? || node_visibility(ast_node) == :public ||
+          ast_node.nil? || ignore_visibility?(node_visibility(ast_node)) ||
             !@called_methods.include?(ast_node)
         end
 

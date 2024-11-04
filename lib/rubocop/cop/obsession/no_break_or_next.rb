@@ -11,8 +11,8 @@ module RuboCop
       # - For small loops, you can just use normal conditions instead of `next`.
       # `break` is allowed.
       #
-      # Note: Sometimes loops can also be rethought, like transforming a `loop`
-      # + `break` into a `while`.
+      # Note: Sometimes loops can also be rethought, like transforming a
+      # `loop` + `break` into a `while`.
       #
       # @example
       #

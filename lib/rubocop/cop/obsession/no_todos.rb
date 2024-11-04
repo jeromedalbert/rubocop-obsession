@@ -11,6 +11,19 @@ module RuboCop
       # stale TODOs. Sometimes developers really mean to work on their TODOs
       # soon, but then Product re-prioritizes their work, or the developer
       # leaves the company, and never gets a chance to tackle them.
+      #
+      # @example
+      #
+      #   # bad
+      #   # TODO: remove this method when we ship the new signup flow
+      #   def my_method
+      #     ...
+      #   end
+      #
+      #   # good
+      #   def my_method
+      #     ...
+      #   end
       class NoTodos < Base
         MSG = 'Avoid TODO comment, create a task in your project management tool instead.'
         KEYWORD_REGEX = /(^|[^\w])(TODO|FIXME|OPTIMIZE|HACK)($|[^\w])/i

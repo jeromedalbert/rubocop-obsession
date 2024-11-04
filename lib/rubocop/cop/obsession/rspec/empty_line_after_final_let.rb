@@ -8,15 +8,17 @@ if defined?(RuboCop::RSpec)
           #
           # @example
           #
-          #   describe '#domain' do
-          #     context do
-          #       let(:url) { Url.new('http://www.some-site.com/some-page') }
-          #       it { expect(url.domain).to eq 'some-site.com' }
-          #     end
+          #   describe Url do
+          #     describe '#domain' do
+          #       context do
+          #         let(:url) { Url.new('http://www.some-site.com/some-page') }
+          #         it { expect(url.domain).to eq 'some-site.com' }
+          #       end
           #
-          #     context do
-          #       let(:url) { Url.new('some-site.com') }
-          #       it { expect(url.domain).to eq 'some-site.com' }
+          #       context do
+          #         let(:url) { Url.new('some-site.com') }
+          #         it { expect(url.domain).to eq 'some-site.com' }
+          #       end
           #     end
           #   end
           class EmptyLineAfterFinalLet < RSpec::EmptyLineAfterFinalLet

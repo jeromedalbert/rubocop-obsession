@@ -19,12 +19,14 @@ module RuboCop
         #
         #   # bad
         #   after_update_commit :crawl_rss, if: :rss_changed?
+        #
         #   def crawl_rss
         #     ...
         #   end
         #
         #   # good
         #   after_update_commit :crawl_rss
+        #
         #   def crawl_rss
         #     return if !rss_changed?
         #     ...

@@ -18,14 +18,18 @@ module RuboCop
         # @example
         #
         #   # bad
-        #   add_column :languages, :items, :jsonb
+        #   def change
+        #     add_column :languages, :items, :jsonb
+        #   end
         #
         #   # good
-        #   add_column :languages,
-        #              :items,
-        #              :jsonb,
-        #              default: [],
-        #              comment: "Example: [{ 'name': 'ruby' }, { 'name': 'python' }]"
+        #   def change
+        #     add_column :languages,
+        #                :items,
+        #                :jsonb,
+        #                default: [],
+        #                comment: "Example: [{ 'name': 'ruby' }, { 'name': 'python' }]"
+        #   end
         class FullyDefinedJsonField < Base
           def_node_matcher :json_field?, <<~PATTERN
             (send nil? :add_column _ _ (sym {:json :jsonb}) ...)

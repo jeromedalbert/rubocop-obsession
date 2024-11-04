@@ -13,6 +13,23 @@ module RuboCop
         # of the DB migration. The reason should be detailed and reviewed by a
         # knowledgeable PR reviewer. Failure to follow instructions may bring your
         # app down.
+        #
+        # @example
+        #
+        #   # bad
+        #   class RemoveSourceUrlFromBlogPosts < ActiveRecord::Migration[8.0]
+        #     def change
+        #       safety_assured { remove_column :blog_posts, :source_url }
+        #     end
+        #   end
+        #
+        #   # good
+        #   class RemoveSourceUrlFromBlogPosts < ActiveRecord::Migration[8.0]
+        #     # Safe because this column was ignored with self.ignored_columns in PR #1234
+        #     def change
+        #       safety_assured { remove_column :blog_posts, :source_url }
+        #     end
+        #   end
         class SafetyAssuredComment < Base
           MSG =
             'Add `# Safe because <reason>` comment above safety_assured. ' \

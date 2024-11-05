@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rubocop-obsession (0.1.7)
+    rubocop-obsession (0.1.8)
       activesupport
       rubocop (~> 1.41)
 

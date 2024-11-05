@@ -1,5 +1,6 @@
 require 'active_support'
 require 'active_support/core_ext/object/blank'
+require 'active_support/core_ext/string/inflections'
 require 'rubocop'
 
 require_relative 'cop/mixin/helpers'

@@ -3,8 +3,6 @@
 module RuboCop
   module Cop
     module Helpers
-      VERBS = File.read("#{__dir__}/files/verbs.txt").split
-
       def rails_callback?(callback)
         return true if callback == 'validate'
 
@@ -20,7 +18,13 @@ module RuboCop
       def verb?(string)
         short_string = string[2..] if string.start_with?('re')
 
-        VERBS.include?(string) || VERBS.include?(short_string)
+        verbs.include?(string) || verbs.include?(short_string)
+      end
+
+      private
+
+      def verbs
+        @@verbs ||= File.read("#{__dir__}/files/verbs.txt").split
       end
     end
   end

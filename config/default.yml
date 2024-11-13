@@ -127,11 +127,11 @@ Layout/ClassStructure:
       - after_destroy_commit
       - around_create
     other_macros:
-      - devise
       - acts_as_paranoid
-      - serialize
-      - has_paper_trail
       - audited
+      - devise
+      - has_paper_trail
+      - serialize
     scopes:
       - default_scope
       - scope

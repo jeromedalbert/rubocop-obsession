@@ -41,7 +41,7 @@ module RuboCop
 
           def on_block(node)
             return if !safety_assured_block?(node)
-            previous_comment = processed_source.comments_before_line(node.first_line)&.first
+            previous_comment = processed_source.comments_before_line(node.first_line)&.last
 
             if previous_comment.nil? || !previous_comment.text.match?(/^# Safe because( [^ ]+){4}/)
               add_offense(node)

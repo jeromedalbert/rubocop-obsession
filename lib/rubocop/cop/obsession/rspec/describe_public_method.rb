@@ -94,13 +94,7 @@ module RuboCop
           end
 
           def parse_file(file_path)
-            parser_class = ::Parser.const_get(:"Ruby#{target_ruby_version.to_s.sub('.', '')}")
-            parser = parser_class.new(RuboCop::AST::Builder.new)
-
-            buffer = Parser::Source::Buffer.new(file_path, 1)
-            buffer.source = File.read(file_path)
-
-            parser.parse(buffer)
+            parse(File.read(file_path)).ast
           end
 
           def find_private_methods(class_node)

@@ -46,7 +46,7 @@ module RuboCop
 
             if method.method_name != :perform
               add_offense(method) do |corrector|
-                corrector.replace(method, method.source.sub(/#{method.method_name}/, 'perform'))
+                corrector.replace(method, method.source.sub(method.method_name.to_s, 'perform'))
               end
             end
           end

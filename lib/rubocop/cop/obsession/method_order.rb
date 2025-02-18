@@ -181,12 +181,20 @@ module RuboCop
         end
 
         def ordered_private_methods(node)
+          current_methods = []
           ast_node = node.value
-          method_name = should_ignore?(ast_node) ? nil : ast_node.method_name
+          if !should_ignore?(ast_node)
+            current_methods << ast_node.method_name
+          end
 
-          next_names = node.children.flat_map { |child| ordered_private_methods(child) }
+          child_methods = node.children.flat_map { |child| ordered_private_methods(child) }
 
-          ([method_name] + next_names).compact.uniq
+          common_methods = child_methods.group_by { |m| m }
+            .select { |_, v| v.length > 1 }
+            .keys
+          unique_methods = child_methods - common_methods
+
+          (current_methods + unique_methods + common_methods).compact.uniq
         end
 
         def should_ignore?(ast_node)

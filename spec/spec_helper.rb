@@ -1,4 +1,5 @@
 require 'rubocop/obsession'
+require 'rubocop/rspec/support'
 
 Dir["#{__dir__}/support/**/*.rb"].each { |f| require f }
 

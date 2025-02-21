@@ -189,9 +189,7 @@ module RuboCop
 
           child_methods = node.children.flat_map { |child| ordered_private_methods(child) }
 
-          common_methods = child_methods.group_by { |m| m }
-            .select { |_, v| v.length > 1 }
-            .keys
+          common_methods = child_methods.tally.select { |_, size| size > 1 }.keys
           unique_methods = child_methods - common_methods
 
           (current_methods + unique_methods + common_methods).compact.uniq

@@ -3,7 +3,7 @@ PATH
   specs:
     rubocop-obsession (0.1.14)
       activesupport
-      rubocop (~> 1.70)
+      rubocop (~> 1.41)
 
 GEM
   remote: https://rubygems.org/

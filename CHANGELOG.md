@@ -1,3 +1,13 @@
+## 0.1.15 - Unreleased
+
+- Add new `MethodOrder` style that more closely aligns with the Stepdown rule
+  from the Clean Code book. Pull request
+  [#11](https://github.com/jeromedalbert/rubocop-obsession/pull/11) by Ferran
+  Pelayo Monfort.
+- Introduce unit tests to the codebase. Pull request
+  [#11](https://github.com/jeromedalbert/rubocop-obsession/pull/11) by Ferran
+  Pelayo Monfort.
+
 ## 0.1.14 - 2025-02-03
 
 - Rename internal helper to avoid conflict with Rubocop.

@@ -1,5 +1,9 @@
 Obsession/MethodOrder:
   Enabled: true
+  EnforcedStyle: depth_first
+  SupportedStyles:
+    - depth_first
+    - common_methods_below
 Obsession/NoBreakOrNext:
   Enabled: false
   Exclude:

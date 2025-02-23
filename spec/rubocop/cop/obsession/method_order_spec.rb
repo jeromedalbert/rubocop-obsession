@@ -33,7 +33,7 @@ RSpec.describe RuboCop::Cop::Obsession::MethodOrder, :config do
   context 'when configured with depth first' do
     let(:cop_config) { { 'EnforcedStyle' => 'depth_first' } }
 
-    it 'expects methods called by multiple methods to be below all of them' do
+    it 'expects methods called by multiple methods to be below the first caller' do
       expect_offense(<<~RUBY)
         class Foo
           def perform

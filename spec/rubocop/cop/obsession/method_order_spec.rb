@@ -1,4 +1,4 @@
-RSpec.describe RuboCop::Cop::Obsession::MethodOrder, :config do
+describe RuboCop::Cop::Obsession::MethodOrder, :config do
   it 'expects the order of private methods to match the order of their first call' do
     expect_offense(<<~RUBY)
       class Foo

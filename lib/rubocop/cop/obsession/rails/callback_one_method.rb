@@ -9,7 +9,6 @@ module RuboCop
         # One method per callback definition makes the definition extra clear.
         #
         # @example
-        #
         #   # bad
         #   after_create :notify_followers, :send_stats
         #

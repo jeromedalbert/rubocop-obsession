@@ -15,7 +15,6 @@ module RuboCop
       # `loop` + `break` into a `while`.
       #
       # @example
-      #
       #   # bad
       #   github_teams.each do |github_team|
       #     next if github_team['size'] == 0

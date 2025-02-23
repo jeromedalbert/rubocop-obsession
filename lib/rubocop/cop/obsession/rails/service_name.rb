@@ -11,7 +11,6 @@ module RuboCop
         # one action, and the best way to describe an action is with a verb.
         #
         # @example
-        #
         #   # bad
         #   class Company
         #     def perform

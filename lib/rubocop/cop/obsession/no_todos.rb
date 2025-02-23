@@ -13,7 +13,6 @@ module RuboCop
       # leaves the company, and never gets a chance to tackle them.
       #
       # @example
-      #
       #   # bad
       #   # TODO: remove this method when we ship the new signup flow
       #   def my_method

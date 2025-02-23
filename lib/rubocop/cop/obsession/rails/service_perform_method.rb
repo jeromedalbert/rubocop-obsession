@@ -13,7 +13,6 @@ module RuboCop
         # interchangeable.
         #
         # @example
-        #
         #   # bad
         #   class ImportCompany
         #     def import

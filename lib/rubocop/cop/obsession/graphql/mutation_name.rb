@@ -10,7 +10,6 @@ module RuboCop
         # and actions are best described with verbs.
         #
         # @example
-        #
         #   # bad
         #   module Mutations
         #     class Event < Base

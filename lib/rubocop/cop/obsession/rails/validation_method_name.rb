@@ -7,7 +7,6 @@ module RuboCop
         # This cop checks for validation methods that do not start with `validate_`.
         #
         # @example
-        #
         #   # bad
         #   validate :at_least_one_admin
         #

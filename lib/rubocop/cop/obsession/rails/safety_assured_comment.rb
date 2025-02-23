@@ -15,7 +15,6 @@ module RuboCop
         # app down.
         #
         # @example
-        #
         #   # bad
         #   class RemoveSourceUrlFromBlogPosts < ActiveRecord::Migration[8.0]
         #     def change

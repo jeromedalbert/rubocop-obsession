@@ -7,7 +7,6 @@ if defined?(RuboCop::RSpec)
           # by `it` with no new line, to allow for this style of spec:
           #
           # @example
-          #
           #   describe Url do
           #     describe '#domain' do
           #       context do

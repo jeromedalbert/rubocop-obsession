@@ -7,7 +7,6 @@ module RuboCop
         # This cop checks for `validate` declarations that could be shorter.
         #
         # @example
-        #
         #   # bad
         #   validate :validate_url, on: %i(create update)
         #

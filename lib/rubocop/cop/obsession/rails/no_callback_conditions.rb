@@ -16,7 +16,6 @@ module RuboCop
         # custom validation callbacks.
         #
         # @example
-        #
         #   # bad
         #   after_update_commit :crawl_rss, if: :rss_changed?
         #

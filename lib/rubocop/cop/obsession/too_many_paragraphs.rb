@@ -15,7 +15,6 @@ module RuboCop
       # could be a sign that they should be broken into smaller methods.
       #
       # @example
-      #
       #   # bad
       #   def set_seo_content
       #     return if seo_content.present?

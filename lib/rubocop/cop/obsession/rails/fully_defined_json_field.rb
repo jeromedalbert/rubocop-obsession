@@ -16,7 +16,6 @@ module RuboCop
         #   defining the field.
         #
         # @example
-        #
         #   # bad
         #   def change
         #     add_column :languages, :items, :jsonb

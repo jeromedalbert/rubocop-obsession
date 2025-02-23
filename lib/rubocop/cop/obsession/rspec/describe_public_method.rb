@@ -15,7 +15,6 @@ module RuboCop
         # corresponding Rails public method, e.g. #create, #save, etc.
         #
         # @example
-        #
         #   class Comment < ApplicationRecord
         #     after_create_commit :notify_users
         #

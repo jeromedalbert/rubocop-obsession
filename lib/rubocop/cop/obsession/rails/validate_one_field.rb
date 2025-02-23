@@ -9,7 +9,6 @@ module RuboCop
         # One field per `validates` makes the validation extra clear.
         #
         # @example
-        #
         #   # bad
         #   validates :name, :status, presence: true
         #

@@ -7,7 +7,6 @@ module RuboCop
         # This cop checks for `after_commit` declarations that could be shorter.
         #
         # @example
-        #
         #   # bad
         #   after_commit :send_email, on: :create
         #

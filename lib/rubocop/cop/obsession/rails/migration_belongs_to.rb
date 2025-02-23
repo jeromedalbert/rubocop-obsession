@@ -11,7 +11,6 @@ module RuboCop
         # declarations that you find in model code.
         #
         # @example
-        #
         #   # bad
         #   def change
         #     add_reference :blog_posts, :user

@@ -11,7 +11,6 @@ module RuboCop
         # be private.
         #
         # @example
-        #
         #   # bad
         #   before_action :load_blog_post
         #

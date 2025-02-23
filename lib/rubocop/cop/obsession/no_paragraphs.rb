@@ -11,7 +11,6 @@ module RuboCop
       # could be: initialization, action, and result.
       #
       # @example
-      #
       #   # bad
       #   def set_seo_content
       #     return if slug.blank?

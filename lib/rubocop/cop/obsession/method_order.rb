@@ -186,7 +186,8 @@ module RuboCop
           method_name = should_ignore?(ast_node) ? nil : ast_node.method_name
           next_names = node.children.flat_map { |child| ordered_private_methods(child) }
 
-          common_methods = depth_first_style? ? [] : next_names.tally.select { |_, size| size > 1 }.keys
+          common_methods =
+            depth_first_style? ? [] : next_names.tally.select { |_, size| size > 1 }.keys
 
           unique_methods = next_names - common_methods
 

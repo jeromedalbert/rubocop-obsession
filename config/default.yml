@@ -1,9 +1,9 @@
 Obsession/MethodOrder:
   Enabled: true
-  EnforcedStyle: depth_first
+  EnforcedStyle: drill_down
   SupportedStyles:
-    - depth_first
-    - common_methods_below
+    - drill_down
+    - step_down
 Obsession/NoBreakOrNext:
   Enabled: false
   Exclude:

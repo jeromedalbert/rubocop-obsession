@@ -30,8 +30,8 @@ describe RuboCop::Cop::Obsession::MethodOrder, :config do
     RUBY
   end
 
-  context 'when configured with depth first' do
-    let(:cop_config) { { 'EnforcedStyle' => 'depth_first' } }
+  context 'when enforced style is drill_down' do
+    let(:cop_config) { { 'EnforcedStyle' => 'drill_down' } }
 
     it 'expects methods called by multiple methods to be below the first caller' do
       expect_offense(<<~RUBY)
@@ -67,8 +67,8 @@ describe RuboCop::Cop::Obsession::MethodOrder, :config do
     end
   end
 
-  context 'when configured with common methods below' do
-    let(:cop_config) { { 'EnforcedStyle' => 'common_methods_below' } }
+  context 'when enforced style is step_down' do
+    let(:cop_config) { { 'EnforcedStyle' => 'step_down' } }
 
     it 'expects methods called by multiple methods to be below all of them' do
       expect_offense(<<~RUBY)

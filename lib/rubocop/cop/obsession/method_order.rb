@@ -6,9 +6,8 @@ module RuboCop
       # This cop checks for private/protected methods that are not ordered
       # correctly. It supports autocorrect.
       #
-      # Code should read from top to bottom: methods should be defined in the
-      # same order as the order when they are first mentioned.
-      # Private/protected methods should follow that rule.
+      # Code should read from top to bottom. Private/protected methods should
+      # follow that rule.
       #
       # Note 1: public methods do not have to follow that rule, and can be
       # defined in any order the developer wants, like by order of importance.
@@ -20,43 +19,119 @@ module RuboCop
       # Note 2: method order cannot be computed for methods called by `send`,
       # metaprogramming, private methods called by superclasses or modules,
       # etc. This cop's suggestions and autocorrections may be slightly off for
-      # these kinds of edge cases.
+      # these cases.
       #
       # Note 3: for simplicity, protected methods do not have to follow that
       # rule if there are both a protected section and a private section.
       #
-      # Note 4: for more information on this style of method ordering, see
-      # Robert C. Martin's "Clean Code" book > "Chapter 3: Functions" > "One
-      # level of abstraction per function" > "Reading Code from Top to Bottom:
-      # The Stepdown Rule" chapter.
+      # @example EnforcedStyle: drill_down (default)
+      #   In this style, methods should be defined in the same order as the
+      #   order when they are first mentioned. This means that a called method
+      #   is defined below the caller method as immediately as possible. In
+      #   other words, you go to the bottom of the method call tree before
+      #   going back up. See the second example.
       #
-      # @example
+      #   This style is similar to the code example provided in the "Reading
+      #   Code from Top to Bottom: The Stepdown Rule" chapter from Robert C.
+      #   Martin's "Clean Code" book, but diverges from it in that it drills
+      #   down to the bottom of the call tree as much as possible.
       #
       #   # bad
-      #   def perform
-      #     return if method_a?
-      #     method_b
-      #     method_c
+      #   class Foo
+      #     def perform
+      #       return if method_a?
+      #       method_b
+      #       method_c
+      #     end
+      #
+      #     private
+      #
+      #     def method_c; ...; end
+      #     def method_b; ...; end
+      #     def method_a?; ...; end
       #   end
-      #
-      #   private
-      #
-      #   def method_c; ...; end
-      #   def method_b; ...; end
-      #   def method_a?; ...; end
       #
       #   # good
-      #   def perform
-      #     return if method_a?
-      #     method_b
-      #     method_c
+      #   class Foo
+      #     def perform
+      #       return if method_a?
+      #       method_b
+      #       method_c
+      #     end
+      #
+      #     private
+      #
+      #     def method_a?; ...; end
+      #     def method_b; ...; end
+      #     def method_c; ...; end
       #   end
       #
-      #   private
+      #   # bad
+      #   class Foo
+      #     def perform
+      #       method_a
+      #       method_b
+      #     end
       #
-      #   def method_a?; ...; end
-      #   def method_b; ...; end
-      #   def method_c; ...; end
+      #     private
+      #
+      #     def method_a; method_c; end
+      #     def method_b; method_c; end
+      #     def method_c; ...; end
+      #   end
+      #
+      #   # good
+      #   class Foo
+      #     def perform
+      #       method_a
+      #       method_b
+      #     end
+      #
+      #     private
+      #
+      #     def method_a; method_c; end
+      #     def method_c; ...; end
+      #     def method_b; method_c; end
+      #   end
+      #
+      # @example EnforcedStyle: step_down
+      #   In this style, common called methods (which tend to have a lower
+      #   level of abstraction) are defined after the group of methods that
+      #   calls them (these caller methods tend to have a higher level of
+      #   abstraction). The idea is to gradually descend one level of
+      #   abstraction at a time.
+      #
+      #   This style adheres more strictly to the code example provided in the
+      #   "Reading Code from Top to Bottom: The Stepdown Rule" chapter from
+      #   Robert C. Martin's "Clean Code" book.
+      #
+      #   # bad
+      #   class Foo
+      #     def perform
+      #       method_a
+      #       method_b
+      #     end
+      #
+      #     private
+      #
+      #     def method_a; method_c; end
+      #     def method_c; ...; end
+      #     def method_b; method_c; end
+      #   end
+      #
+      #   # good
+      #   class Foo
+      #     def perform
+      #       method_a
+      #       method_b
+      #     end
+      #
+      #     private
+      #
+      #     def method_a; method_c; end
+      #     def method_b; method_c; end
+      #     def method_c; ...; end
+      #   end
       class MethodOrder < Base
         include ConfigurableEnforcedStyle
         include Helpers
@@ -187,7 +262,7 @@ module RuboCop
           next_names = node.children.flat_map { |child| ordered_private_methods(child) }
 
           common_methods =
-            depth_first_style? ? [] : next_names.tally.select { |_, size| size > 1 }.keys
+            drill_down_style? ? [] : next_names.tally.select { |_, size| size > 1 }.keys
 
           unique_methods = next_names - common_methods
 
@@ -199,8 +274,8 @@ module RuboCop
             !@called_methods.include?(ast_node)
         end
 
-        def depth_first_style?
-          style == :depth_first
+        def drill_down_style?
+          style == :drill_down
         end
 
         def build_private_methods

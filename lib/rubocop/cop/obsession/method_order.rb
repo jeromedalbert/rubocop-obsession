@@ -58,6 +58,7 @@ module RuboCop
       #   def method_b; ...; end
       #   def method_c; ...; end
       class MethodOrder < Base
+        include ConfigurableEnforcedStyle
         include Helpers
         include CommentsHelp
         include VisibilityHelp
@@ -183,15 +184,23 @@ module RuboCop
         def ordered_private_methods(node)
           ast_node = node.value
           method_name = should_ignore?(ast_node) ? nil : ast_node.method_name
-
           next_names = node.children.flat_map { |child| ordered_private_methods(child) }
 
-          ([method_name] + next_names).compact.uniq
+          common_methods =
+            depth_first_style? ? [] : next_names.tally.select { |_, size| size > 1 }.keys
+
+          unique_methods = next_names - common_methods
+
+          ([method_name] + unique_methods + common_methods).compact.uniq
         end
 
         def should_ignore?(ast_node)
           ast_node.nil? || ignore_visibility?(node_visibility(ast_node)) ||
             !@called_methods.include?(ast_node)
+        end
+
+        def depth_first_style?
+          style == :depth_first
         end
 
         def build_private_methods

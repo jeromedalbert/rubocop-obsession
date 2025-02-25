@@ -1,4 +1,4 @@
-## 0.1.15 - Unreleased
+## 0.1.15 - 2025-02-24
 
 - Add new `MethodOrder` style that more closely aligns with the Stepdown rule
   from the Clean Code book. Pull request

@@ -1,4 +1,4 @@
-## 0.1.16 - 2025-03-22
+## 0.2.0 - 2025-03-22
 
 - Add new `alphabetical` style to `MethodOrder` cop.
 - Make Rubocop Obsession work as a RuboCop plugin.

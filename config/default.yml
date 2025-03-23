@@ -4,6 +4,7 @@ Obsession/MethodOrder:
   SupportedStyles:
     - drill_down
     - step_down
+    - alphabetical
 Obsession/NoBreakOrNext:
   Enabled: false
   Exclude:

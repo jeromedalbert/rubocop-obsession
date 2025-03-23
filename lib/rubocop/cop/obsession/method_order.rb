@@ -6,30 +6,27 @@ module RuboCop
       # This cop checks for private/protected methods that are not ordered
       # correctly. It supports autocorrect.
       #
-      # Code should read from top to bottom. Private/protected methods should
-      # follow that rule.
-      #
-      # Note 1: public methods do not have to follow that rule, and can be
+      # Note 1: the order of public methods is not enforced. They can be
       # defined in any order the developer wants, like by order of importance.
-      # This is because they are usually called outside of the class and often
-      # not called within the class at all. If possible though, developers
-      # should still try to order their public methods from top to bottom when
-      # it makes sense.
+      # This is because public methods are usually called outside of the class
+      # and often not called within the class at all. If possible though,
+      # developers should still try to order their public methods when it makes
+      # sense.
       #
-      # Note 2: method order cannot be computed for methods called by `send`,
-      # metaprogramming, private methods called by superclasses or modules,
-      # etc. This cop's suggestions and autocorrections may be slightly off for
-      # these cases.
+      # Note 2: for top to bottom styles, method order cannot be computed for
+      # methods called by `send`, metaprogramming, private methods called by
+      # superclasses or modules, etc. This cop's suggestions and
+      # autocorrections may be slightly off for these cases.
       #
-      # Note 3: for simplicity, protected methods do not have to follow that
-      # rule if there are both a protected section and a private section.
+      # Note 3: for simplicity, protected methods do not have to be ordered if
+      # there are both a protected section and a private section.
       #
       # @example EnforcedStyle: drill_down (default)
-      #   In this style, methods should be defined in the same order as the
-      #   order when they are first mentioned. This means that a called method
-      #   is defined below the caller method as immediately as possible. In
-      #   other words, you go to the bottom of the method call tree before
-      #   going back up. See the second example.
+      #   In this style, code should read from top to bottom. More
+      #   particularly, methods should be defined in the same order as the
+      #   order when they are first mentioned. Put another way, you go to the
+      #   bottom of the method call tree before going back up. See examples
+      #   below.
       #
       #   This style is similar to the code example provided in the "Reading
       #   Code from Top to Bottom: The Stepdown Rule" chapter from Robert C.
@@ -95,9 +92,10 @@ module RuboCop
       #   end
       #
       # @example EnforcedStyle: step_down
-      #   In this style, common called methods (which tend to have a lower
-      #   level of abstraction) are defined after the group of methods that
-      #   calls them (these caller methods tend to have a higher level of
+      #   In this style, code should read from top to bottom. More
+      #   particularly, common called methods (which tend to have a lower level
+      #   of abstraction) are defined after the group of methods that calls
+      #   them (these caller methods tend to have a higher level of
       #   abstraction). The idea is to gradually descend one level of
       #   abstraction at a time.
       #
@@ -130,6 +128,32 @@ module RuboCop
       #
       #     def method_a; method_c; end
       #     def method_b; method_c; end
+      #     def method_c; ...; end
+      #   end
+      #
+      # @example EnforcedStyle: alphabetical
+      #   In this style, methods are ordered alphabetically. This style is
+      #   unambiguous and interpretation-free.
+      #
+      #   # bad
+      #   class Foo
+      #     def perform; ...; end
+      #
+      #     private
+      #
+      #     def method_c; ...; end
+      #     def method_b; ...; end
+      #     def method_a; ...; end
+      #   end
+      #
+      #   # good
+      #   class Foo
+      #     def perform; ...; end
+      #
+      #     private
+      #
+      #     def method_a; ...; end
+      #     def method_b; ...; end
       #     def method_c; ...; end
       #   end
       class MethodOrder < Base
@@ -166,9 +190,7 @@ module RuboCop
           @class_node = class_node
           find_private_node || return
           build_methods || return
-          build_callback_methods
 
-          build_method_call_tree
           build_ordered_private_methods
           build_private_methods
 
@@ -207,6 +229,25 @@ module RuboCop
           end
 
           @methods.any?
+        end
+
+        def build_ordered_private_methods
+          if style == :alphabetical
+            @ordered_private_methods = alphabetically_ordered_private_methods
+          else
+            build_callback_methods
+            build_method_call_tree
+            @ordered_private_methods = top_to_bottom_ordered_private_methods(@method_call_tree)
+          end
+        end
+
+        def alphabetically_ordered_private_methods
+          @methods
+            .values
+            .uniq
+            .reject { |method| ignore_visibility?(node_visibility(method)) }
+            .map(&:method_name)
+            .sort
         end
 
         def build_callback_methods
@@ -252,18 +293,14 @@ module RuboCop
           called_methods
         end
 
-        def build_ordered_private_methods
-          @ordered_private_methods = ordered_private_methods(@method_call_tree)
-        end
-
-        def ordered_private_methods(node)
+        def top_to_bottom_ordered_private_methods(node)
           ast_node = node.value
           method_name = should_ignore?(ast_node) ? nil : ast_node.method_name
-          next_names = node.children.flat_map { |child| ordered_private_methods(child) }
+          next_names =
+            node.children.flat_map { |child| top_to_bottom_ordered_private_methods(child) }
 
           common_methods =
-            drill_down_style? ? [] : next_names.tally.select { |_, size| size > 1 }.keys
-
+            (style == :drill_down) ? [] : next_names.tally.select { |_, size| size > 1 }.keys
           unique_methods = next_names - common_methods
 
           ([method_name] + unique_methods + common_methods).compact.uniq
@@ -272,10 +309,6 @@ module RuboCop
         def should_ignore?(ast_node)
           ast_node.nil? || ignore_visibility?(node_visibility(ast_node)) ||
             !@called_methods.include?(ast_node)
-        end
-
-        def drill_down_style?
-          style == :drill_down
         end
 
         def build_private_methods

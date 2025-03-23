@@ -1,11 +1,12 @@
 ## 0.1.16 - 2025-03-22
 
+- Add new `alphabetical` style to `MethodOrder` cop.
 - Make Rubocop Obsession work as a RuboCop plugin.
 
 ## 0.1.15 - 2025-02-24
 
-- Add new `MethodOrder` style that more closely aligns with the Stepdown rule
-  from the Clean Code book. Pull request
+- Add new `step_down` style to `MethodOrder` cop. This style more closely
+  aligns with the Stepdown rule from the Clean Code book. Pull request
   [#11](https://github.com/jeromedalbert/rubocop-obsession/pull/11) by Ferran
   Pelayo Monfort.
 - Introduce unit tests to the codebase. Pull request

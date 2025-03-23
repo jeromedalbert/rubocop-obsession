@@ -13,11 +13,13 @@ Gem::Specification.new do |spec|
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/jeromedalbert/rubocop-obsession'
+  spec.metadata['default_lint_roller_plugin'] = 'Rubocop::Obsession::Plugin'
 
   spec.files = Dir['LICENSE.txt', 'README.md', 'config/**/*', 'lib/**/*']
   spec.licenses = ['MIT']
   spec.require_paths = ['lib']
 
   spec.add_dependency 'activesupport'
-  spec.add_dependency 'rubocop', '~> 1.41'
+  spec.add_dependency 'lint_roller', '~> 1.1'
+  spec.add_dependency 'rubocop', '~> 1.72'
 end

@@ -1,11 +1,14 @@
-require:
+plugins:
+  - rubocop-obsession
   - rubocop-performance
   - rubocop-rake
   - rubocop-rspec
   - rubocop-rubycw
-  - standard
   - standard-custom
   - standard-performance
+
+require:
+  - standard
 
 inherit_gem:
   standard: config/base.yml

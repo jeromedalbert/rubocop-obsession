@@ -1,3 +1,7 @@
+## 0.1.16 - 2025-03-22
+
+- Make Rubocop Obsession work as a RuboCop plugin.
+
 ## 0.1.15 - 2025-02-24
 
 - Add new `MethodOrder` style that more closely aligns with the Stepdown rule

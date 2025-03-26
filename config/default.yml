@@ -32,7 +32,7 @@ Obsession/Rspec/DescribePublicMethod:
   Enabled: true
   Include:
     - 'spec/**/*_spec.rb'
-# Uncommenting this would mean adding rubocop-rspec as a gem dependency. Feels like too much for now.
+# This can be uncommented if you have rubocop-rspec as a gem dependency.
 # Obsession/Rspec/EmptyLineAfterFinalLet:
 #   Enabled: true
 #   Include:

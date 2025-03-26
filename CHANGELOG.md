@@ -1,3 +1,7 @@
+## Unreleased
+
+- Fix `EmptyLineAfterFinalLet` uninitialized constant error.
+
 ## 0.2.0 - 2025-03-22
 
 - Add new `alphabetical` style to `MethodOrder` cop.

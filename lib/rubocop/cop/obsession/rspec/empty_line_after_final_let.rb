@@ -1,3 +1,8 @@
+begin
+  require 'rubocop-rspec'
+rescue LoadError
+end
+
 if defined?(RuboCop::RSpec)
   module RuboCop
     module Cop

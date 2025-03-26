@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rubocop-obsession (0.2.0)
+    rubocop-obsession (0.2.1)
       activesupport
       lint_roller (~> 1.1)
       rubocop (~> 1.72)

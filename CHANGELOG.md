@@ -1,6 +1,11 @@
+## 0.2.2 - 2025-05-11
+
+- Fix `MethodOrder` uninitialized constant error sometimes happening in source
+  code that uses aliases.
+
 ## 0.2.1 - 2025-03-25
 
-- Fix `EmptyLineAfterFinalLet` uninitialized constant error.
+- Fix `Rspec/EmptyLineAfterFinalLet` uninitialized constant error.
 
 ## 0.2.0 - 2025-03-22
 
@@ -23,11 +28,13 @@
 
 ## 0.1.13 - 2024-12-08
 
-- Fix `ServicePerformMethod` autocorrect sometimes resulting in infinite loops.
+- Fix `Rails/ServicePerformMethod` autocorrect sometimes resulting in infinite
+  loops.
 
 ## 0.1.12 - 2024-11-26
 
-- Fix `DescribePublicMethod` uninitialized constant error sometimes happening.
+- Fix `Rspec/DescribePublicMethod` uninitialized constant error sometimes
+  happening.
 
 ## 0.1.11 - 2024-11-14
 
@@ -35,9 +42,10 @@
 
 ## 0.1.10 - 2024-11-14
 
-- Fix `SafetyAssuredComment` misbehaving when there are multiple comments. Pull
-  request [#8](https://github.com/jeromedalbert/rubocop-obsession/pull/8) by
-  Garrett Blehm.
+- Fix `Rails/SafetyAssuredComment` misbehaving when there are multiple
+  comments. Pull request
+  [#8](https://github.com/jeromedalbert/rubocop-obsession/pull/8) by Garrett
+  Blehm.
 
 ## 0.1.9 - 2024-11-05
 

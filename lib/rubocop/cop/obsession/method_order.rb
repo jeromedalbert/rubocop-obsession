@@ -333,7 +333,7 @@ module RuboCop
         end
 
         def sorbet_signature?(node)
-          node && node.method_name == :sig && node.type == :block
+          node&.respond_to?(:method_name) && node.method_name == :sig && node.type == :block
         end
       end
     end

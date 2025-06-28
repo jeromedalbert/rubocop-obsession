@@ -50,7 +50,7 @@ module RuboCop
 
           def on_class(class_node)
             return if public_methods(class_node).length != 1
-            class_name = class_node.identifier.source
+            class_name = class_node.identifier.source.split('::').last
             class_name_first_word = class_name.underscore.split('_').first
 
             add_offense(class_node) if !verb?(class_name_first_word)

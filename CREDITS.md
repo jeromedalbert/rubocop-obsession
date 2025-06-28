@@ -1,5 +1,6 @@
 # Rubocop Obsession credits
 
+- Iaroslav Kurbatov https://github.com/viralpraxis gh-16, fix ServiceName
 - Hiemanshu Sharma https://github.com/hiemanshu gh-14, uninitialized constant
 - Ferran Pelayo Monfort https://github.com/ferranpm gh-11, improve method ordering, introduce tests
 - Oleksandr Bratashov https://github.com/abratashov gh-10, helper name conflict

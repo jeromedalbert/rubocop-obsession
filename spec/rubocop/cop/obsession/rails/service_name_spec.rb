@@ -67,5 +67,14 @@ describe RuboCop::Cop::Obsession::Rails::ServiceName, :config do
         end
       RUBY
     end
+
+    it 'does not register an offense when class has a compact namespace' do
+      expect_no_offenses(<<~RUBY)
+        class Scheduled::UpdateBlogPostPopularityJob < ApplicationJob
+          def perform
+          end
+        end
+      RUBY
+    end
   end
 end

@@ -1,3 +1,9 @@
+## 0.2.3 - 2025-06-28
+
+- Fix `Rails/ServiceName` misbehaving for compact namespaces. Pull request
+  [#16](https://github.com/jeromedalbert/rubocop-obsession/pull/16) by Iaroslav
+  Kurbatov.
+
 ## 0.2.2 - 2025-05-11
 
 - Fix `MethodOrder` uninitialized constant error sometimes happening in source

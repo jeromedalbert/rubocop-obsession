@@ -1,6 +1,4 @@
 describe RuboCop::Cop::Obsession::Rails::ServiceName, :config do
-  let(:cop_config) { { 'EnforcedStyle' => 'drill_down' } }
-
   context 'when class name does not start with a verb' do
     it 'registers an offense' do
       expect_offense(<<~RUBY)

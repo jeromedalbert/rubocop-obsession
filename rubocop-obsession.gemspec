@@ -13,6 +13,7 @@ Gem::Specification.new do |spec|
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/jeromedalbert/rubocop-obsession'
+  spec.metadata['rubygems_mfa_required'] = 'true'
   spec.metadata['default_lint_roller_plugin'] = 'Rubocop::Obsession::Plugin'
 
   spec.files = Dir['LICENSE.txt', 'README.md', 'config/**/*', 'lib/**/*']

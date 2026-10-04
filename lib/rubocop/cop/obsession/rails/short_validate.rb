@@ -8,7 +8,7 @@ module RuboCop
         #
         # @example
         #   # bad
-        #   validate :validate_url, on: %i(create update)
+        #   validate :validate_url, on: %i[create update]
         #
         #   # good
         #   validate :validate_url

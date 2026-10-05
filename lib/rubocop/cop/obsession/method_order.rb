@@ -170,7 +170,14 @@ module RuboCop
         PATTERN
 
         def_node_matcher :on_callback, <<~PATTERN
-          (send nil? $_ (sym $_) ...)
+          (send _ $_ (sym $_) ...)
+        PATTERN
+
+        def_node_matcher :on_included, <<~PATTERN
+          {
+            (block (send nil? :included) _ $_)
+            (defs self :included _ $_)
+          }
         PATTERN
 
         def_node_search :method_calls, <<~PATTERN
@@ -195,6 +202,10 @@ module RuboCop
           build_private_methods
 
           verify_private_methods_order
+        end
+
+        def on_module(module_node)
+          on_class(module_node)
         end
 
         private
@@ -254,10 +265,16 @@ module RuboCop
           @callback_methods = []
 
           @class_node.body.children.each do |node|
-            on_callback(node) do |callback, method_name|
-              if rails_callback?(callback.to_s) && @methods[method_name]
-                @callback_methods << @methods[method_name]
-              end
+            add_callback_methods(node)
+
+            on_included(node) { |body| body&.each_node { |node| add_callback_methods(node) } }
+          end
+        end
+
+        def add_callback_methods(node)
+          on_callback(node) do |callback_name, method_name|
+            if rails_callback?(callback_name.to_s) && @methods[method_name]
+              @callback_methods << @methods[method_name]
             end
           end
         end

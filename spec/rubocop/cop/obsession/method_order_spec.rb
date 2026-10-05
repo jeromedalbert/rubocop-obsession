@@ -132,6 +132,90 @@ describe RuboCop::Cop::Obsession::MethodOrder, :config do
         RUBY
       end
     end
+
+    context 'when module private methods are not ordered from top to bottom' do
+      it 'registers an offense' do
+        expect_offense(<<~RUBY)
+          module Foo
+            def my_public_method
+              method_a
+            end
+
+            private
+
+            def method_b; end
+            def method_a; method_b; end
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^ Method `method_a` should appear below `private`.
+          end
+        RUBY
+
+        expect_correction(<<~RUBY)
+          module Foo
+            def my_public_method
+              method_a
+            end
+
+            private
+
+            def method_a; method_b; end
+            def method_b; end
+          end
+        RUBY
+      end
+    end
+
+    context 'when module callback methods are not ordered from top to bottom' do
+      it 'registers an offense' do
+        expect_offense(<<~RUBY)
+          module Foo
+            extend ActiveSupport::Concern
+
+            included do
+              before_validation :method_a
+            end
+
+            def self.included(base)
+              base.class_eval { before_validation :method_b }
+              base.before_validation :method_c
+            end
+
+            def my_public_method; method_d; end
+
+            private
+
+            def method_d; end
+            def method_c; end
+            def method_b; end
+            def method_a; end
+            ^^^^^^^^^^^^^^^^^ Method `method_a` should appear below `private`.
+          end
+        RUBY
+
+        expect_correction(<<~RUBY)
+          module Foo
+            extend ActiveSupport::Concern
+
+            included do
+              before_validation :method_a
+            end
+
+            def self.included(base)
+              base.class_eval { before_validation :method_b }
+              base.before_validation :method_c
+            end
+
+            def my_public_method; method_d; end
+
+            private
+
+            def method_a; end
+            def method_b; end
+            def method_c; end
+            def method_d; end
+          end
+        RUBY
+      end
+    end
   end
 
   context 'when enforced style is step_down' do
@@ -238,6 +322,33 @@ describe RuboCop::Cop::Obsession::MethodOrder, :config do
             def method_b; end
             def method_b_a; end
             def method_c; end
+          end
+        RUBY
+      end
+    end
+
+    context 'when module methods are not ordered alphabetically' do
+      it 'registers an offense' do
+        expect_offense(<<~RUBY)
+          module Foo
+            def my_public_method; end
+
+            private
+
+            def method_b; end
+            def method_a; end
+            ^^^^^^^^^^^^^^^^^ Method `method_a` should appear below `private`.
+          end
+        RUBY
+
+        expect_correction(<<~RUBY)
+          module Foo
+            def my_public_method; end
+
+            private
+
+            def method_a; end
+            def method_b; end
           end
         RUBY
       end

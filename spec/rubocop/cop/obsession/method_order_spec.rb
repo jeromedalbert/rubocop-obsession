@@ -2,142 +2,282 @@ describe RuboCop::Cop::Obsession::MethodOrder, :config do
   context 'when enforced style is drill_down' do
     let(:cop_config) { { 'EnforcedStyle' => 'drill_down' } }
 
-    it 'expects private methods to be ordered from top to bottom' do
-      expect_offense(<<~RUBY)
-        class Foo
-          def perform
-            return if method_a?
-            method_b
-            method_c
+    context 'when private methods are not ordered from top to bottom' do
+      it 'registers an offense' do
+        expect_offense(<<~RUBY)
+          class Foo
+            def perform
+              return if method_a?
+              method_b
+              method_c
+            end
+
+            private
+
+            def method_c; end
+            def method_b; end
+            def method_a?; end
+            ^^^^^^^^^^^^^^^^^^ Method `method_a?` should appear below `private`.
           end
+        RUBY
 
-          private
+        expect_correction(<<~RUBY)
+          class Foo
+            def perform
+              return if method_a?
+              method_b
+              method_c
+            end
 
-          def method_c; end
-          def method_b; end
-          def method_a?; end
-          ^^^^^^^^^^^^^^^^^^ Method `method_a?` should appear below `private`.
-        end
-      RUBY
+            private
 
-      expect_correction(<<~RUBY)
-        class Foo
-          def perform
-            return if method_a?
-            method_b
-            method_c
+            def method_a?; end
+            def method_b; end
+            def method_c; end
           end
-
-          private
-
-          def method_a?; end
-          def method_b; end
-          def method_c; end
-        end
-      RUBY
+        RUBY
+      end
     end
 
-    it 'expects methods called by multiple methods to be below the first caller' do
-      expect_offense(<<~RUBY)
-        class Foo
-          def perform
-            method_a
-            method_b
+    context 'when private methods are ordered from top to bottom' do
+      it 'does not register an offense' do
+        expect_no_offenses(<<~RUBY)
+          class Foo
+            def perform
+              return if method_a?
+              method_b
+              method_c
+            end
+
+            private
+
+            def method_a?; end
+            def method_b; end
+            def method_c; end
           end
+        RUBY
+      end
+    end
 
-          private
+    context 'when a shared method is not below the first caller' do
+      it 'registers an offense' do
+        expect_offense(<<~RUBY)
+          class Foo
+            def perform
+              method_a
+              method_b
+            end
 
-          def method_a; method_c; end
-          def method_b; method_c; end
-          def method_c; end
-          ^^^^^^^^^^^^^^^^^ Method `method_c` should appear below `method_a`.
-        end
-      RUBY
+            private
 
-      expect_correction(<<~RUBY)
-        class Foo
-          def perform
-            method_a
-            method_b
+            def method_a; method_c; end
+            def method_b; method_c; end
+            def method_c; end
+            ^^^^^^^^^^^^^^^^^ Method `method_c` should appear below `method_a`.
           end
+        RUBY
 
-          private
+        expect_correction(<<~RUBY)
+          class Foo
+            def perform
+              method_a
+              method_b
+            end
 
-          def method_a; method_c; end
-          def method_c; end
-          def method_b; method_c; end
-        end
-      RUBY
+            private
+
+            def method_a; method_c; end
+            def method_c; end
+            def method_b; method_c; end
+          end
+        RUBY
+      end
+    end
+
+    context 'when callback methods are not ordered from top to bottom' do
+      it 'registers an offense' do
+        expect_offense(<<~RUBY)
+          class Foo
+            before_validation :method_a
+            after_save :method_b
+
+            def my_public_method
+              method_c
+            end
+
+            private
+
+            def method_c; end
+            def method_b; end
+            def method_a; end
+            ^^^^^^^^^^^^^^^^^ Method `method_a` should appear below `private`.
+          end
+        RUBY
+
+        expect_correction(<<~RUBY)
+          class Foo
+            before_validation :method_a
+            after_save :method_b
+
+            def my_public_method
+              method_c
+            end
+
+            private
+
+            def method_a; end
+            def method_b; end
+            def method_c; end
+          end
+        RUBY
+      end
     end
   end
 
   context 'when enforced style is step_down' do
     let(:cop_config) { { 'EnforcedStyle' => 'step_down' } }
 
-    it 'expects methods called by multiple methods to be below all of them' do
-      expect_offense(<<~RUBY)
-        class Foo
-          def perform
-            method_a
-            method_b
+    context 'when a shared method is not below all callers' do
+      it 'registers an offense' do
+        expect_offense(<<~RUBY)
+          class Foo
+            def perform
+              method_a
+              method_b
+            end
+
+            private
+
+            def method_a; method_c; end
+            def method_c; end
+            def method_b; method_c; end
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^ Method `method_b` should appear below `method_a`.
           end
+        RUBY
 
-          private
+        expect_correction(<<~RUBY)
+          class Foo
+            def perform
+              method_a
+              method_b
+            end
 
-          def method_a; method_c; end
-          def method_c; end
-          def method_b; method_c; end
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^ Method `method_b` should appear below `method_a`.
-        end
-      RUBY
+            private
 
-      expect_correction(<<~RUBY)
-        class Foo
-          def perform
-            method_a
-            method_b
+            def method_a; method_c; end
+            def method_b; method_c; end
+            def method_c; end
           end
+        RUBY
+      end
+    end
 
-          private
+    context 'when a shared method is below all callers' do
+      it 'does not register an offense' do
+        expect_no_offenses(<<~RUBY)
+          class Foo
+            def perform
+              method_a
+              method_b
+            end
 
-          def method_a; method_c; end
-          def method_b; method_c; end
-          def method_c; end
-        end
-      RUBY
+            private
+
+            def method_a; method_c; end
+            def method_b; method_c; end
+            def method_c; end
+          end
+        RUBY
+      end
     end
   end
 
   context 'when enforced style is alphabetical' do
     let(:cop_config) { { 'EnforcedStyle' => 'alphabetical' } }
 
-    it 'expects private methods to be ordered alphabetically' do
-      expect_offense(<<~RUBY)
-        class Foo
-          def perform; end
+    context 'when private methods are not ordered alphabetically' do
+      it 'registers an offense' do
+        expect_offense(<<~RUBY)
+          class Foo
+            def perform; end
 
-          private
+            private
 
-          def method_c; end
-          def method_b; end
-          def method_b_a; end
-          def method_a; end
-          ^^^^^^^^^^^^^^^^^ Method `method_a` should appear below `private`.
-        end
-      RUBY
+            def method_c; end
+            def method_b; end
+            def method_b_a; end
+            def method_a; end
+            ^^^^^^^^^^^^^^^^^ Method `method_a` should appear below `private`.
+          end
+        RUBY
 
-      expect_correction(<<~RUBY)
-        class Foo
-          def perform; end
+        expect_correction(<<~RUBY)
+          class Foo
+            def perform; end
 
-          private
+            private
 
-          def method_a; end
-          def method_b; end
-          def method_b_a; end
-          def method_c; end
-        end
-      RUBY
+            def method_a; end
+            def method_b; end
+            def method_b_a; end
+            def method_c; end
+          end
+        RUBY
+      end
     end
+
+    context 'when private methods are ordered alphabetically' do
+      it 'does not register an offense' do
+        expect_no_offenses(<<~RUBY)
+          class Foo
+            def perform; end
+
+            private
+
+            def method_a; end
+            def method_b; end
+            def method_b_a; end
+            def method_c; end
+          end
+        RUBY
+      end
+    end
+  end
+
+  it 'autocorrects methods with Sorbet signatures' do
+    expect_offense(<<~RUBY)
+      class Foo
+        def perform
+          method_a
+          method_b
+        end
+
+        private
+
+        sig { void }
+        def method_b; end
+
+        sig { returns(Integer) }
+        def method_a; 1; end
+        ^^^^^^^^^^^^^^^^^^^^ Method `method_a` should appear below `private`.
+      end
+    RUBY
+
+    expect_correction(<<~RUBY)
+      class Foo
+        def perform
+          method_a
+          method_b
+        end
+
+        private
+
+        sig { returns(Integer) }
+        def method_a; 1; end
+
+        sig { void }
+        def method_b; end
+      end
+    RUBY
   end
 end

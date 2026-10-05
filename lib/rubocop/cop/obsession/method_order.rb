@@ -225,7 +225,7 @@ module RuboCop
           return false if @class_node&.body&.type != :begin
 
           @class_node.body.children.each do |child|
-            @methods[child.method_name] = child if child.type == :def
+            @methods[child.method_name] = child if child.def_type?
           end
 
           @methods.any?
@@ -366,7 +366,7 @@ module RuboCop
         end
 
         def sorbet_signature?(node)
-          node&.respond_to?(:method_name) && node.method_name == :sig && node.type == :block
+          node.block_type? && node.method_name == :sig
         end
       end
     end
